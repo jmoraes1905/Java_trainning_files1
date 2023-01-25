@@ -9,14 +9,10 @@ public class Program {
 	public static void main(String[] args) {
 
 		String path = "c:\\temp\\in.txt";
-		FileReader fr = null;
-		BufferedReader br =null;
-		
-		try {
-			fr = new FileReader(path);
-			br = new BufferedReader(fr);
-			
-			String line = br.readLine();
+		//Eliminate declaration of file related objects by using block try-with-resources
+		try(BufferedReader br = new BufferedReader(new FileReader(path))) {
+			//Declaration and instantiation of buffered reader and file reader objects done at try block start 
+			String line = br.readLine(); //String receives text file lines until file is over 
 			while(line!=null) {
 				System.out.println(line);
 				line = br.readLine();
@@ -26,21 +22,6 @@ public class Program {
 			System.out.println("Error: " + e.getMessage());
 		}
 		
-		finally {
-			try {
-				if(br!=null) {
-					br.close();
-				}
-				
-				if(fr!=null) {
-					fr.close();
-				}
-			}
-			catch(IOException e) {
-				e.printStackTrace();
-			}
-			}
-			
 		
 	}
 
